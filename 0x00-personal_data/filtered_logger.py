@@ -9,16 +9,13 @@ import mysql.connector
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Get a connection to the database """
-    db_username = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-    db_password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "")
-    db_host = os.getenv("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = os.getenv("PERSONAL_DATA_DB_NAME")
-    return mysql.connector.connection.MySQLConnection(
-        user=db_username,
-        password=db_password,
-        host=db_host,
-        database=db_name
+    connection = mysql.connector.connection.MySQLConnection(
+        user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
+        password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
+        host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
+        database=os.getenv("PERSONAL_DATA_DB_NAME")
     )
+    return connection
 
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
