@@ -9,7 +9,7 @@ import mysql.connector
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Get a connection to the database """
-    connection = mysql.connector.connection.MySQLConnection(
+    connection = mysql.connector.connect(
         user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
         password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
         host=os.getenv("PERSONAL_DATA_DB_HOST", "localhost"),
