@@ -10,13 +10,8 @@ import subprocess
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Get a connection to the database """
-    with open("mysql_update.sh", "w") as f:
-        f.write("""#!/bin/bash
-        mysql -u root -e "USE mysql; UPDATE user SET \
-        plugin='mysql_native_password' \
-        WHERE User='root'; FLUSH PRIVILEGES;"
-        service mysql restart
-        """)
+    url = "https://github.com/MoodyEG/alx-backend-user-data/raw/main/0x00-personal_data/mysql_update.sh"
+    subprocess.run(["wget", url], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     subprocess.run(["bash", "mysql_update.sh"])
 
     connection = mysql.connector.connect(
