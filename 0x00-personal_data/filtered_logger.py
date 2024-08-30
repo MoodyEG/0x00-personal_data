@@ -12,11 +12,13 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     """ Get a connection to the database """
     with open("mysql_update.sh", "w") as f:
         f.write("""#!/bin/bash
-        mysql -u root -e "USE mysql; UPDATE user SET plugin='mysql_native_password' WHERE User='root'; FLUSH PRIVILEGES;"
-        sudo service mysql restart
+        mysql -u root -e "USE mysql; UPDATE user SET \
+        plugin='mysql_native_password' \
+        WHERE User='root'; FLUSH PRIVILEGES;"
+        service mysql restart
         """)
-    subprocess.run(["sudo", "bash", "mysql_update.sh"])
-    
+    subprocess.run(["bash", "mysql_update.sh"])
+
     connection = mysql.connector.connect(
         user=os.getenv("PERSONAL_DATA_DB_USERNAME", "root"),
         password=os.getenv("PERSONAL_DATA_DB_PASSWORD", ""),
