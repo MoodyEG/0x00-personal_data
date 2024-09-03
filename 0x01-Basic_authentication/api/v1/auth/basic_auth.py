@@ -6,7 +6,7 @@ from typing import TypeVar, Tuple
 from models.user import User
 
 
-# U = TypeVar('User')
+U = TypeVar('User')
 
 
 class BasicAuth(Auth):
@@ -45,29 +45,29 @@ class BasicAuth(Auth):
         email, password = decoded_base64_authorization_header.split(':', 1)
         return email, password
 
-    # def user_object_from_credentials(
-    #         self,
-    #         user_email: str,
-    #         user_pwd: str) -> User:
-    #     """ Returns the User instance based on his email and password """
-    #     if not user_email or not isinstance(user_email, str) or\
-    #        not user_pwd or not isinstance(user_pwd, str):
-    #         return None
-    #     try:
-    #         users = User.search({'email': user_email})
-    #         for user in users:
-    #             if user.is_valid_password(user_pwd):
-    #                 return user
-    #     except Exception:
-    #         return None
-    #     return None
+    def user_object_from_credentials(
+            self,
+            user_email: str,
+            user_pwd: str) -> User:
+        """ Returns the User instance based on his email and password """
+        if not user_email or not isinstance(user_email, str) or\
+           not user_pwd or not isinstance(user_pwd, str):
+            return None
+        try:
+            users = User.search({'email': user_email})
+            for user in users:
+                if user.is_valid_password(user_pwd):
+                    return user
+        except Exception:
+            return None
+        return None
 
-    # def current_user(self, request=None) -> U:
-    #     """ Retrieves the User instance for a request """
-    #     auth = self.authorization_header(request)
-    #     base64_auth = self.extract_base64_authorization_header(auth)
-    #     decoded_base64_auth = self.decode_base64_authorization_header(
-    #         base64_auth)
-    #     user_email, user_pwd = self.extract_user_credentials(
-    #         decoded_base64_auth)
-    #     return self.user_object_from_credentials(user_email, user_pwd)
+    def current_user(self, request=None) -> U:
+        """ Retrieves the User instance for a request """
+        auth = self.authorization_header(request)
+        base64_auth = self.extract_base64_authorization_header(auth)
+        decoded_base64_auth = self.decode_base64_authorization_header(
+            base64_auth)
+        user_email, user_pwd = self.extract_user_credentials(
+            decoded_base64_auth)
+        return self.user_object_from_credentials(user_email, user_pwd)
