@@ -14,12 +14,12 @@ class Auth:
         """ require_auth method """
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
-        if path[-1] != '/':
-            path_s = path + '/'
-        if path[-1] == '/':
-            path_s = path[:-1]
-        if path in excluded_paths or path_s in excluded_paths:
-            return False
+        for excluded in excluded_paths:
+            if excluded.endswith('*'):
+                if path.startswith(excluded[:-1]):
+                    return False
+            elif path == excluded:
+                return False
         return True
 
     def authorization_header(self, request=None) -> str:
