@@ -14,11 +14,12 @@ class Auth:
         """ require_auth method """
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
+        path = path.rstrip('/')
         for excluded in excluded_paths:
             if excluded.endswith('*'):
                 if path.startswith(excluded[:-1]):
                     return False
-            elif path == excluded:
+            elif path == excluded.rstrip('/'):
                 return False
         return True
 
