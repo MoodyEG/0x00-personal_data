@@ -5,7 +5,7 @@ from typing import List, TypeVar
 from models.user import User
 
 
-User = TypeVar('User')
+U = TypeVar('User')
 
 
 class Auth:
@@ -28,6 +28,6 @@ class Auth:
             return None
         return request.headers.get('Authorization')
 
-    def current_user(self, request=None) -> User:
+    def current_user(self, request=None) -> U:
         """ current_user method """
         return None
