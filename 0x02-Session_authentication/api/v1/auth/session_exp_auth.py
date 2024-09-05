@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """ Module of Session expiration authentication """
 from api.v1.auth.session_auth import SessionAuth
-import uuid
 import os
 from datetime import datetime, timedelta
 
