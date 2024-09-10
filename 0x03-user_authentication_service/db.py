@@ -38,7 +38,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: str) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """ Find user by email and password """
         keys = []
         values = []
