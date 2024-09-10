@@ -17,7 +17,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=False)
+        self._engine = create_engine("sqlite:///a.db", echo=True)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -40,19 +40,13 @@ class DB:
 
     def find_user_by(self, **kwargs: str) -> User:
         """ Find user by email and password """
-        if not kwargs:
-            raise InvalidRequestError
-        columns = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in columns:
-                raise InvalidRequestError
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
-        except Exception as e:
-            raise InvalidRequestError
-        if user is None:
-            raise NoResultFound
-        return user
+            if user is None:
+                raise NoResultFound
+            return user
+        except InvalidRequestError:
+            raise
 
     def update_user(self, user_id: int, **kwargs: str) -> None:
         """ Update user """
