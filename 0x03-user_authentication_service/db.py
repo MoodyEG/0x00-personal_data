@@ -40,6 +40,8 @@ class DB:
 
     def find_user_by(self, **kwargs: str) -> User:
         """ Find user by email and password """
+        if not kwargs:
+            raise InvalidRequestError
         try:
             user = self._session.query(User).filter_by(**kwargs).first()
         except Exception as e:
