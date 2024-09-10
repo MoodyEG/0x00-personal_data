@@ -47,11 +47,11 @@ class DB:
                 keys.append(getattr(User, key))
                 values.append(value)
             else:
-                raise InvalidRequestError
+                raise InvalidRequestError()
         user = self._session.query(User)
         res = user.filter(tuple_(*keys).in_([tuple(values)])).first()
         if res is None:
-            raise NoResultFound
+            raise NoResultFound()
         return res
 
     def update_user(self, user_id: int, **kwargs: str) -> None:
