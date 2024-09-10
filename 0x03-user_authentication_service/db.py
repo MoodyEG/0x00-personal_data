@@ -45,8 +45,10 @@ class DB:
             if user is None:
                 raise NoResultFound
             return user
+        except NoResultFound:
+            raise NoResultFound
         except InvalidRequestError:
-            raise
+            raise InvalidRequestError
 
     def update_user(self, user_id: int, **kwargs: str) -> None:
         """ Update user """
