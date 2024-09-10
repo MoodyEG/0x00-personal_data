@@ -33,6 +33,8 @@ class Auth:
         """ Validate login """
         try:
             user = self._db.find_user_by(email=email)
-            return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+            in_p = password.encode('utf-8')
+            out_p = user.hashed_password
+            return bcrypt.checkpw(in_p, out_p)
         except NoResultFound:
             return False
