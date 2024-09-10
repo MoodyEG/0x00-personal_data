@@ -2,6 +2,7 @@
 """
 Main file
 Was easier than unittests
+After the Adv still better than unittests
 """
 import requests
 # from db import DB
